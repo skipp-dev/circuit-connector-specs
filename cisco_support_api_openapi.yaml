@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: Cisco Support APIs (EoX, SN2Info Coverage, Case v3) for MyAgent
+  version: 1.0.0
+  description: >
+    Read-only Cisco Support API endpoints used by MyAgent job e882c473 for
+    contract coverage, EoS/EoL milestones and TAC case status per customer.
+servers:
+  - url: https://apix.cisco.com
+security:
+  - ciscoOAuth: []
+components:
+  securitySchemes:
+    ciscoOAuth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://id.cisco.com/oauth2/default/v1/token
+          scopes: {}
+paths:
+  /sn2info/v2/coverage/summary/serial_numbers/{serial_numbers}:
+    get:
+      operationId: getCoverageBySerial
+      summary: Service contract coverage per serial number (is_covered, contract, service level, end date)
+      parameters:
+        - name: serial_numbers
+          in: path
+          required: true
+          description: Comma-separated serial numbers (max 75)
+          schema: { type: string }
+      responses:
+        "200": { description: Coverage summary per serial number }
+  /sn2info/v2/coverage/summary/instance_numbers/{instance_numbers}:
+    get:
+      operationId: getCoverageByInstance
+      summary: Service contract coverage per instance number
+      parameters:
+        - name: instance_numbers
+          in: path
+          required: true
+          description: Comma-separated instance numbers (max 75)
+          schema: { type: string }
+      responses:
+        "200": { description: Coverage summary per instance number }
+  /supporttools/eox/rest/5/EOXBySerialNumber/{page_index}/{serial_numbers}:
+    get:
+      operationId: getEoxBySerial
+      summary: End-of-Sale / End-of-SW-Maintenance / Last-Date-of-Support per serial number
+      parameters:
+        - name: page_index
+          in: path
+          required: true
+          schema: { type: integer, default: 1 }
+        - name: serial_numbers
+          in: path
+          required: true
+          description: Comma-separated serial numbers (max 20)
+          schema: { type: string }
+      responses:
+        "200": { description: EoX records }
+  /supporttools/eox/rest/5/EOXByProductID/{page_index}/{product_ids}:
+    get:
+      operationId: getEoxByProductId
+      summary: EoX milestones per product ID / SKU (fallback when serial has no record)
+      parameters:
+        - name: page_index
+          in: path
+          required: true
+          schema: { type: integer, default: 1 }
+        - name: product_ids
+          in: path
+          required: true
+          description: Comma-separated product IDs (max 20)
+          schema: { type: string }
+      responses:
+        "200": { description: EoX records }
+  /case/v3/cases/case_ids/{case_ids}:
+    get:
+      operationId: getCasesById
+      summary: TAC case details and status (status, severity, title, last update)
+      parameters:
+        - name: case_ids
+          in: path
+          required: true
+          description: Comma-separated TAC case/SR numbers (max 30)
+          schema: { type: string }
+      responses:
+        "200": { description: Case details }
+  /case/v3/cases/contracts/{contract_ids}:
+    get:
+      operationId: getCasesByContract
+      summary: TAC cases per service contract number (to find all open SRs of a customer)
+      parameters:
+        - name: contract_ids
+          in: path
+          required: true
+          description: Comma-separated contract numbers (max 10)
+          schema: { type: string }
+        - name: date_created_from
+          in: query
+          required: true
+          description: ISO-8601 start date, e.g. 2026-08-01T00:00:00Z
+          schema: { type: string }
+        - name: date_created_to
+          in: query
+          required: true
+          description: ISO-8601 end date
+          schema: { type: string }
+        - name: status_flag
+          in: query
+          description: O = open, C = closed
+          schema: { type: string, enum: [O, C] }
+      responses:
+        "200": { description: Cases for the contracts }
