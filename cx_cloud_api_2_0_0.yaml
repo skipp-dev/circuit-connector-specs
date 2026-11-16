@@ -1,0 +1,2827 @@
+openapi: 3.0.1
+info:
+  title: CX Cloud API
+  version: 2.0.0
+  description: APIs to access CX Cloud data
+  contact:
+    name: CX Cloud Community
+    url: https://community.cisco.com/t5/cx-cloud/bd-p/CX-Cloud-Discussions
+  license:
+    name: Cisco API License
+    url: https://developer.cisco.com/site/license/cisco-api-license/
+  termsOfService: https://www.cisco.com/c/dam/en_us/about/doing_business/legal/seula/cx-cloud-seula.pdf
+servers:
+  - url: https://apix.cisco.com/cs/api/v2
+    description: Cisco API Console
+security:
+  - Oauth2:
+      - "apis:read"
+
+tags:
+  - name: customer
+    description: API operations to get customer details from entitled CX Cloud accounts
+  - name: inventory
+    description: API operations to get inventory details from entitled CX Cloud accounts
+  - name: contract
+    description: API operations to get contract details from entitled CX Cloud accounts
+  - name: productAlert
+    description: API operations to get alerts details from entitled CX Cloud accounts
+
+paths:
+  /contracts/contract-details:
+    get:
+      summary: List Contracts
+      operationId: getContractDetails
+      description: Returns the Cisco service contracts connected to a CX Cloud account.
+      tags: [contract]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/contractNumber_param'
+        - $ref: '#/components/parameters/contractStartDate_param'
+        - $ref: '#/components/parameters/contractEndDate_param'
+        - $ref: '#/components/parameters/contractStatus_param'
+        - $ref: '#/components/parameters/serviceLevel_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/ContractDetailsResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /contracts/coverage:
+    get:
+      summary: List Covered Assets
+      operationId: getCoverage
+      description: Returns assets in a CX Cloud account that are covered by a Cisco service contract.
+      tags: [contract]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/contractNumber_param'
+        - $ref: '#/components/parameters/contractStatus_param'
+        - $ref: '#/components/parameters/coverageStartDate_param'
+        - $ref: '#/components/parameters/coverageEndDate_param'
+        - $ref: '#/components/parameters/coverageStatus_param'
+        - $ref: '#/components/parameters/serialNumber_param'
+        - $ref: '#/components/parameters/serviceLevel_param'
+        - $ref: '#/components/parameters/productId_param'
+        - $ref: '#/components/parameters/serviceLineStatus_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/CoverageResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /contracts/not-covered:
+    get:
+      summary: List Uncovered Assets
+      operationId: getNotCovered
+      description: Returns assets in a CX Cloud account that are not covered by a Cisco service contract.
+      tags: [contract]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/serialNumber_param'
+        - $ref: '#/components/parameters/productId_param'
+        - $ref: '#/components/parameters/contractInstanceNumber_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/NotCoveredResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /inventory/hardware:
+    get:
+      summary: List Hardware
+      operationId: getHardware
+      description: Returns asset details (Chassis and Components) in a CX Cloud account.
+      tags: [inventory]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/neInstanceId_param'
+        - $ref: '#/components/parameters/managedNeInstanceId_param'
+        - $ref: '#/components/parameters/hwType_param'
+        - $ref: '#/components/parameters/hwInstanceId_param'
+        - $ref: '#/components/parameters/productSubtype_param'
+        - $ref: '#/components/parameters/productType_param'
+        - $ref: '#/components/parameters/productFamily_param'
+        - $ref: '#/components/parameters/productId_param'
+        - $ref: '#/components/parameters/serialNumber_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/HardwareResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /inventory/network-elements:
+    get:
+      summary: List Network Elements
+      operationId: getNetworkElements
+      description: Returns asset details (Chassis) in a CX Cloud account.
+      tags: [inventory]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/neInstanceId_param'
+        - $ref: '#/components/parameters/managedNeInstanceId_param'
+        - $ref: '#/components/parameters/isManagedNe_param'
+        - $ref: '#/components/parameters/ipAddress_param'
+        - $ref: '#/components/parameters/hostname_param'
+        - $ref: '#/components/parameters/swType_param'
+        - $ref: '#/components/parameters/swVersion_param'
+        - $ref: '#/components/parameters/productFamily_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/NetworkElementsResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /customer-info/customer-details:
+    get:
+      summary: List Customer Accounts
+      operationId: getCustomerDetails
+      description: Returns CX Cloud accounts the user has permission to query.
+      tags: [customer]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param_optional'
+        - $ref: '#/components/parameters/customerName_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        "200": { $ref: '#/components/responses/CustomerDetailsResponse' }
+        "400": { $ref: '#/components/responses/BadRequestResponse' }
+        "401": { $ref: '#/components/responses/UnauthorizedResponse' }
+        "403": { $ref: '#/components/responses/ForbiddenResponse' }
+        "404": { $ref: '#/components/responses/NotFoundResponse' }
+        "500": { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /product-alerts/field-notices:
+    get:
+      summary: List Field Notices
+      operationId: getFieldNotices
+      description: Returns details of active Field Notice vulnerabilities on the assets in a CX Cloud account.
+      tags: [productAlert]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/bulletinNumber_param'
+        - $ref: '#/components/parameters/neInstanceId_param'
+        - $ref: '#/components/parameters/managedNeInstanceId_param'
+        - $ref: '#/components/parameters/hwInstanceId_param'
+        - $ref: '#/components/parameters/vulnerabilityStatus_param'
+        - $ref: '#/components/parameters/hostname_param'
+        - $ref: '#/components/parameters/swType_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/FieldNoticesResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /product-alerts/field-notice-bulletins:
+    get:
+      summary: List Field Notice Bulletins
+      operationId: getFieldNoticeBulletins
+      description: Returns Field Notice bulletin data for the bulletins in the field-notices API.
+      tags: [productAlert]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/bulletinNumber_param'
+        - $ref: '#/components/parameters/bulletinFirstPublished_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/FieldNoticeBulletinsResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /product-alerts/hardware-eol:
+    get:
+      summary: List Hardware EOL
+      operationId: getHardwareEOL
+      description: Returns the Hardware End of Life details of hardware assets in a CX Cloud account.
+      tags: [productAlert]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/neInstanceId_param'
+        - $ref: '#/components/parameters/managedNeInstanceId_param'
+        - $ref: '#/components/parameters/hwInstanceId_param'
+        - $ref: '#/components/parameters/hostname_param'
+        - $ref: '#/components/parameters/hwType_param'
+        - $ref: '#/components/parameters/currentHwEolMilestone_param'
+        - $ref: '#/components/parameters/nextHwEolMilestone_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/HardwareEolResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /product-alerts/hardware-eol-bulletins:
+    get:
+      summary: List Hardware EOL Bulletins
+      operationId: getHardwareEOLBulletins
+      description: Returns End of Life bulletin data for the bulletins in the hardware-eol API.
+      tags: [productAlert]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/bulletinNumber_param'
+        - $ref: '#/components/parameters/bulletinProductId_param'
+        - $ref: '#/components/parameters/bulletinTitle_param'
+        - $ref: '#/components/parameters/eoLifeAnnouncementDate_param'
+        - $ref: '#/components/parameters/eoSaleDate_param'
+        - $ref: '#/components/parameters/hwEolInstanceId_param'
+        - $ref: '#/components/parameters/lastShipDate_param'
+        - $ref: '#/components/parameters/eoSwMaintenanceReleasesDate_param'
+        - $ref: '#/components/parameters/eoRoutineFailureAnalysisDate_param'
+        - $ref: '#/components/parameters/eoNewServiceAttachmentDate_param'
+        - $ref: '#/components/parameters/eoServiceContractRenewalDate_param'
+        - $ref: '#/components/parameters/lastDateOfSupport_param'
+        - $ref: '#/components/parameters/eoVulnerabilitySecuritySupport_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/HardwareEolBulletinsResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /product-alerts/security-advisories:
+    get:
+      summary: List Security Advisories
+      operationId: getSecurityAdvisories
+      description: Returns the active Security Advisory vulnerabilities on the assets in a CX Cloud account.
+      tags: [productAlert]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/neInstanceId_param'
+        - $ref: '#/components/parameters/managedNeInstanceId_param'
+        - $ref: '#/components/parameters/hwInstanceId_param'
+        - $ref: '#/components/parameters/vulnerabilityStatus_param'
+        - $ref: '#/components/parameters/hostname_param'
+        - $ref: '#/components/parameters/swType_param'
+        - $ref: '#/components/parameters/securityAdvisoryInstanceId_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/SecurityAdvisoriesResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /product-alerts/security-advisory-bulletins:
+    get:
+      summary: List Security Advisory Bulletins
+      operationId: getSecurityAdvisoryBulletins
+      description: Returns Security Advisory bulletin data for the bulletins in the security-advisories API.
+      tags: [productAlert]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/advisoryId_param'
+        - $ref: '#/components/parameters/securityAdvisoryInstanceId_param'
+        - $ref: '#/components/parameters/securityImpactRating_param'
+        - $ref: '#/components/parameters/bulletinTitle_param'
+        - $ref: '#/components/parameters/cveId_param'
+        - $ref: '#/components/parameters/bulletinFirstPublished_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/SecurityAdvisoryBulletinsResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /product-alerts/software-eol:
+    get:
+      summary: List Software EOL
+      operationId: getSoftwareEOL
+      description: Returns the Software End of Life details of the software running on the assets in a CX Cloud account.
+      tags: [productAlert]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/neInstanceId_param'
+        - $ref: '#/components/parameters/managedNeInstanceId_param'
+        - $ref: '#/components/parameters/hostname_param'
+        - $ref: '#/components/parameters/swType_param'
+        - $ref: '#/components/parameters/swVersion_param'
+        - $ref: '#/components/parameters/currentSwEolMilestone_param'
+        - $ref: '#/components/parameters/nextSwEolMilestone_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/SoftwareEolResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+  /product-alerts/software-eol-bulletins:
+    get:
+      summary: List Software EOL Bulletins
+      operationId: getSoftwareEOLBulletins
+      description: Returns End of Life bulletin data for the bulletins in the software-eol API.
+      tags: [productAlert]
+      parameters:
+        - $ref: '#/components/parameters/customerId_param'
+        - $ref: '#/components/parameters/swEolInstanceId_param'
+        - $ref: '#/components/parameters/bulletinNumber_param'
+        - $ref: '#/components/parameters/bulletinTitle_param'
+        - $ref: '#/components/parameters/eoLifeAnnouncementDate_param'
+        - $ref: '#/components/parameters/eoSaleDate_param'
+        - $ref: '#/components/parameters/eoSwMaintenanceReleasesDate_param'
+        - $ref: '#/components/parameters/lastDateOfSupport_param'
+        - $ref: '#/components/parameters/eoVulnerabilitySecuritySupport_param'
+        - $ref: '#/components/parameters/format_param'
+        - $ref: '#/components/parameters/fields_param'
+        - $ref: '#/components/parameters/page_param'
+        - $ref: '#/components/parameters/rows_param'
+        - $ref: '#/components/parameters/sort_param'
+      responses:
+        '200': { $ref: '#/components/responses/SoftwareEolBulletinsResponse' }
+        '400': { $ref: '#/components/responses/BadRequestResponse' }
+        '401': { $ref: '#/components/responses/UnauthorizedResponse' }
+        '403': { $ref: '#/components/responses/ForbiddenResponse' }
+        '404': { $ref: '#/components/responses/NotFoundResponse' }
+        '500': { $ref: '#/components/responses/InternalServerErrorResponse' }
+      security:
+        - Oauth2: [apis:read]
+
+components:
+  parameters:
+    format_param:
+      name: format
+      in: query
+      description: Output format of the API response
+      schema:
+        type: string
+        default: JSON
+        enum:
+          - 'JSON'
+          - 'CSV'
+          - 'TSV'
+    fields_param:
+      name: fields
+      in: query
+      description: Restricts API response to the specific fields.
+      schema:
+        type: string
+        example: 'field1,field2'
+    page_param:
+      name: page
+      in: query
+      description: The page to return in a paginated API response.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    rows_param:
+      name: rows
+      in: query
+      description: The size of the page in the API response.
+      schema:
+        type: integer
+        default: 20
+    sort_param:
+      name: sort
+      in: query
+      description: 'The sort order (ASC or DESC) for a field in the API response.  Can be specified multiple times for multi-field sorting.  If order is not specified for a field, it defaults to ASC.  Example with multi-field sorting: sort=field&sort=field2:DESC'
+      schema:
+        type: array
+        items:
+          type: string
+      explode: true
+    advisoryId_param:
+      name: advisoryId
+      in: query
+      description: Published identifier of a security advisory
+      schema:
+        type: string
+        example: 'cisco-sa-ise-unauth-rce-ZAd2GnJ6'
+    bulletinFirstPublished_param:
+      name: bulletinFirstPublished
+      in: query
+      description: Date when the bulletin was first published to Cisco.com
+      schema:
+        type: string
+        example: '2024-11-11'
+    bulletinNumber_param:
+      name: bulletinNumber
+      in: query
+      description: Unique identifier for a bulletin on Cisco.com
+      schema:
+        type: string
+        example: 'EOL15177'
+    bulletinProductId_param:
+      name: bulletinProductId
+      in: query
+      description: Cisco Product ID on a published EOL bulletin
+      schema:
+        type: string
+        example: 'WS-C6509-E'
+    bulletinTitle_param:
+      name: bulletinTitle
+      in: query
+      description: Cisco.com Title/Headline for the bulletin
+      schema:
+        type: string
+        example: 'DNA Center Second Generation Appliance'
+    contractEndDate_param:
+      name: contractEndDate
+      in: query
+      description: Limits the results to contracts that end on or before this date
+      schema:
+        type: string
+        example: '2024-03-30'
+    contractInstanceNumber_param:
+      name: contractInstanceNumber_param
+      in: query
+      description: The Instance Number in Cisco Commerce for an asset 
+      schema:
+        type: string
+        example: '987654321'
+    contractNumber_param:
+      name: contractNumber
+      in: query
+      description: A Cisco service contract number
+      schema:
+        type: string
+        example: '123456789'
+    contractStartDate_param:
+      name: contractStartDate
+      in: query
+      description: Limits the results to contracts that start on or after this date
+      schema:
+        type: string
+        example: '2021-03-31'
+    contractStatus_param:
+      name: contractStatus
+      in: query
+      description: Status of the service contract
+      schema:
+        type: string
+        example: 'ACTIVE'
+        enum:
+          - 'ACTIVE'
+          - 'OVERDUE'
+          - 'SIGNED'
+    coverageEndDate_param:
+      name: coverageEndDate
+      in: query
+      description: Limits the results to assets where coverage ends on or before this date
+      schema:
+        type: string
+        example: '2026-12-31'
+    coverageStartDate_param:
+      name: coverageStartDate
+      in: query
+      description: Limits the results to assets where coverage starts on or after this date
+      schema:
+        type: string
+        example: '2025-03-31'
+    coverageStatus_param:
+      name: coverageStatus
+      in: query
+      description: The contract coverage status for a specific piece of hardware
+      schema:
+        type: string
+        example: 'ACTIVE'
+        enum:
+          - 'ACTIVE'
+    currentHwEolMilestone_param:
+      name: currentHwEolMilestone
+      in: query
+      description: Latest hardware end-of-life milestone that has passed for the product
+      schema:
+        type: string
+        example: 'LAST_SUPPORT_DATE'
+    currentSwEolMilestone_param:
+      name: currentSwEolMilestone
+      in: query
+      description: Latest software end-of-life milestone that has passed for the product
+      schema:
+        type: string
+        example: 'END_OF_SECURITY_VUL_SUPPORT_DATE'
+    customerId_param:
+      name: customerId
+      in: query
+      required: true
+      description: A CX Cloud customer identifier
+      schema:
+        type: string
+        example: 'abc123def'
+    customerId_param_optional:
+      name: customerId
+      in: query
+      description: A CX Cloud customer identifier
+      schema:
+        type: string
+        example: 'abc123def'
+    customerName_param:
+      name: customerName
+      in: query
+      description: A CX Cloud customer account name
+      schema:
+        type: string
+        example: 'CISCO SYSTEMS'
+    cveId_param:
+      name: cveId
+      in: query
+      description: Common Vulnerabilities and Exposures (CVE) Identifier
+      schema:
+        type: string
+        example: 'CVE-2025-20202'
+    eoLifeAnnouncementDate_param:
+      name: eoLifeAnnouncementDate
+      in: query
+      description: Date when the bulletin was first published to Cisco.com
+      schema:
+        type: string
+        example: '2024-11-11'
+    eoNewServiceAttachmentDate_param:
+      name: eoNewServiceAttachmentDate
+      in: query
+      description: Last date to order a new service and support contract or add the equipment and software to an existing service-and-support contract
+      schema:
+        type: string
+        example: '2024-11-11'
+    eoRoutineFailureAnalysisDate_param:
+      name: eoRoutineFailureAnalysisDate
+      in: query
+      description: Last possible date a routine failure analysis may be performed to determine the cause of hardware product failure or defect
+      schema:
+        type: string
+        example: '2024-11-11'
+    eoSaleDate_param:
+      name: eoSaleDate
+      in: query
+      description: Last date to order the product through Cisco point-of-sale mechanisms. The product is no longer for sale after this date.
+      schema:
+        type: string
+        example: '2024-11-11'
+    eoServiceContractRenewalDate_param:
+      name: eoServiceContractRenewalDate
+      in: query
+      description: Last date to extend or renew a service contract for the product
+      schema:
+        type: string
+        example: '2024-11-11'
+    eoSwMaintenanceReleasesDate_param:
+      name: eoSwMaintenanceReleasesDate
+      in: query
+      description: Last date that Cisco engineering may release any final software maintenance releases or bug fixes. After this date, Cisco engineering will no longer develop, repair, maintain, or test the product software.
+      schema:
+        type: string
+        example: '2024-11-11'
+    eoVulnerabilitySecuritySupport_param:
+      name: eoVulnerabilitySecuritySupport
+      in: query
+      description: Last date that Cisco engineering may release a planned maintenance release or scheduled software remedy for a security vulnerability issue.
+      schema:
+        type: string
+        example: '2024-11-11'
+    hostname_param:
+      name: hostname
+      in: query
+      description: Human-readable name that corresponds to the address of a device connected to a network
+      schema:
+        type: string
+        example: 'switch5'
+    hwEolInstanceId_param:
+      name: hwEolInstanceId
+      in: query
+      description: Unique identifier for hardware end-of-life entry in a data store
+      schema:
+        type: string
+        example: '234'
+    hwInstanceId_param:
+      name: hwInstanceId
+      in: query
+      description: Unique identifier of the physical hardware
+      schema:
+        type: string
+        example: 'SERIAL1,PID1,NA,NA,SERIAL2,PID2,NA'
+    hwType_param:
+      name: hwType
+      in: query
+      description: Physical type of the hardware
+      schema:
+        type: string
+        example: 'Chassis'
+        enum:
+          - 'Chassis'
+          - 'Module'
+          - 'Power Supply'
+          - 'Fan'
+          - 'Software'
+    ipAddress_param:
+      name: ipAddress
+      in: query
+      description: A numerical label assigned to each device (for example, computer, printer) participating in a computer network that uses the Internet Protocol for communication.
+      schema:
+        type: string
+        example: '192.168.1.1'
+    isManagedNe_param:
+      name: isManagedNe
+      in: query
+      description: Indicates whether the collector or data source directly manages the device.
+      schema:
+        type: integer
+        example: 1
+    lastDateOfSupport_param:
+      name: lastDateOfSupport
+      in: query
+      description: Last date to receive applicable service and support for the product as entitled by active service contracts or by warranty terms and conditions. After this date, all support services for the product will be unavailable and the product becomes obsolete.
+      schema:
+        type: string
+        example: '2024-11-11'
+    lastShipDate_param:
+      name: lastShipDate
+      in: query
+      description: Last possible ship date that can be requested of Cisco and its contract manufacturers. Actual ship date depends on lead time.
+      schema:
+        type: string
+        example: '2024-11-11'
+    managedNeInstanceId_param:
+      name: managedNeInstanceId
+      in: query
+      description: Identifier for the managed network element. For single chassis devices, the managedNeInstanceId and neInstanceId are same.  For multi-chassis devices, the managedNeInstanceId is the neInstanceId of the primary chassis and all the neInstanceIds will be share the same managedNeInstanceId.
+      schema:
+        type: string
+        example: 'NA,SERIAL,PID,NA'
+    neInstanceId_param:
+      name: neInstanceId
+      in: query
+      description: Identifier for a network element.  A network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+      schema:
+        type: string
+        example: 'NA,SERIAL,PID,NA'
+    nextHwEolMilestone_param:
+      name: nextHwEolMilestone
+      in: query
+      description: Next hardware end-of-life milestone that is coming up. If the device is already LDoS, it will not have a next milestone.
+      schema:
+        type: string
+        example: 'END_OF_SALE'
+    nextSwEolMilestone_param:
+      name: nextSwEolMilestone
+      in: query
+      description: Next software end-of-life milestone that is coming up. If the device is already LDoS, it will not have a next milestone.
+      schema:
+        type: string
+        example: 'END_OF_SALE'
+    productId_param:
+      name: productId
+      in: query
+      description: The alphanumeric unique identifier of a Cisco Product. The id is used by customers to order Cisco products.
+      schema:
+        type: string
+        example: 'ISR4331/K9'
+    productFamily_param:
+      name: productFamily
+      in: query
+      description: Grouping of similar Cisco products.
+      schema:
+        type: string
+        example: 'Cisco Catalyst 9500 Series Switches'
+    productSubtype_param:
+      name: productSubtype
+      in: query
+      description: Further classification for hardware within a Product Type.
+      schema:
+        type: string
+        example: 'Blade Server'
+    productType_param:
+      name: productType
+      in: query
+      description: Broad classification of Cisco product that categorizes its function.
+      schema:
+        type: string
+        example: 'Switches'
+    securityAdvisoryInstanceId_param:
+      name: securityAdvisoryInstanceId
+      in: query
+      description: Internally generated ID for a security advisory
+      schema:
+        type: string
+        example: '1234'
+    securityImpactRating_param:
+      name: securityImpactRating
+      in: query
+      description: Security Impact Rating (SIR) for Cisco Security Advisories
+      schema:
+        type: string
+        example: 'Critical'
+    serialNumber_param:
+      name: serialNumber
+      in: query
+      description: A unique identifier for hardware
+      schema:
+        type: string
+        example: 'AAA1234ZZZZ'
+    serviceLevel_param:
+      name: serviceLevel
+      in: query
+      description: Alphanumeric code that denotes the purchased support service
+      schema:
+        type: string
+        example: 'L1NBD'
+    serviceLineStatus_param:
+      name: serviceLineStatus
+      in: query
+      description: The status of a specific line on a service contract
+      schema:
+        type: string
+        example: 'ACTIVE'
+        enum:
+          - 'ACTIVE'
+          - 'OVERDUE'
+          - 'EXPIRED'
+          - 'TERMINATED'
+          - 'SIGNED'
+    swEolInstanceId_param:
+      name: swEolInstanceId
+      in: query
+      description: Internally generated ID for a software end-of-life entry
+      schema:
+        type: string
+        example: '234'
+    swType_param:
+      name: swType
+      in: query
+      description: Type of software that is installed on this host or system.
+      schema:
+        type: string
+        example: 'IOS-XE'
+    swVersion_param:
+      name: swVersion
+      in: query
+      description: A version of operating system installed on the Network Element
+      schema:
+        type: string
+        example: '17.9.1'
+    vulnerabilityStatus_param:
+      name: vulnerabilityStatus
+      in: query
+      description: The vulnerability status of a Network Element
+      schema:
+        type: string
+        example: 'VUL'
+        enum:
+          - 'VUL'
+          - 'POTVUL'
+  headers:
+    CacheControl:
+      description: Cache Control Header
+      schema:
+        type: string
+      example: no-cache
+    TrackingID:
+      description: Tracking ID
+      schema:
+        type: string
+      example: '1234'
+    Date:
+      description: Timestamp the response was processed
+      schema:
+        type: string
+        format: E, dd MMM yyyy HH:mm:ss z
+      example: 'Fri, 27 Jun 2025 09:07:36 GMT'
+  responses:
+    BadRequestResponse:
+      description: Bad Request
+    UnauthorizedResponse:
+      description: Unauthorized
+    ForbiddenResponse:
+      description: Forbidden
+    NotFoundResponse:
+      description: Not Found
+    InternalServerErrorResponse:
+      description: Internal Server Error
+
+    ContractDetailsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContractDetails'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    CoverageResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Coverage'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    NotCoveredResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotCovered'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    HardwareResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Hardware'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    NetworkElementsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NetworkElements'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    CustomerDetailsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CustomerDetails"
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    FieldNoticesResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FieldNotices'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    FieldNoticeBulletinsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FieldNoticeBulletins'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    HardwareEolResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HardwareEol'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    HardwareEolBulletinsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HardwareEolBulletins'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    SecurityAdvisoriesResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SecurityAdvisories'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    SecurityAdvisoryBulletinsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SecurityAdvisoryBulletins'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    SoftwareEolResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SoftwareEol'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+    SoftwareEolBulletinsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SoftwareEolBulletins'
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/CacheControl'
+        TrackingID:
+          $ref: '#/components/headers/TrackingID'
+        Date:
+          $ref: '#/components/headers/Date'
+
+  schemas:
+    Pagination:
+      description: Pagination details
+      type: object
+      properties:
+        page:
+          description: Current page
+          type: integer
+          format: int32
+          example: 1
+        pages:
+          description: Total number of pages
+          type: integer
+          format: int32
+          example: 3
+        rows:
+          description: Number of records on each page
+          type: integer
+          format: int32
+          example: 20
+        total:
+          description: Total number of records
+          type: integer
+          format: int64
+          example: 56
+
+    ContractDetails:
+      description: Contract Details schema
+      type: object
+      properties:
+        data:
+          description: Contains array of contract details
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                contractNumber:
+                  description: A Cisco service contract number.
+                  type: string
+                  example: '123456789'
+                contractEndDate:
+                  description: End date of the service contract. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2024-03-30'
+                contractStartDate:
+                  description: Start date of the service contract. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2021-03-31'
+                contractStatus:
+                  description: Status of the service contract
+                  type: string
+                  nullable: true
+                  example: 'ACTIVE'
+                  enum:
+                    - 'ACTIVE'
+                    - 'OVERDUE'
+                    - 'SIGNED'
+                serviceProgram:
+                  description: A Cisco Services program
+                  type: string
+                  nullable: true
+                  example: 'CX LEVEL 2'
+                serviceLevel:
+                  description: Alphanumeric code that denotes the purchased support service
+                  type: string
+                  nullable: true
+                  example: 'L1NBD'
+                baseProductId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoSiteId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoSiteName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoAddressLine1:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoAddressLine2:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoAddressLine3:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoAddressLine4:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoCity:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoState:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoPostalCode:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoProvince:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoCountry:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoGuName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoGuid:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                siteUseName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                siteUseId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                siteAddress1:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                siteCity:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                siteStateProvince:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                sitePostalCode:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                siteCountry:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+        pagination:
+          $ref: '#/components/schemas/Pagination'        
+    Coverage:
+      description: Coverage schema
+      type: object
+      properties:
+        data:
+          description: Contains array of coverage
+          type: array
+          items:
+              properties:
+                serialNumber:
+                  description: A unique identifier for hardware
+                  type: string
+                  nullable: true
+                  example: 'AAA1234ZZZZ'
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                productId:
+                  description: The alphanumeric unique identifier of a Cisco Product. The id is used by customers to order Cisco products
+                  type: string
+                  nullable: true
+                  example: 'ISR4331/K9'
+                contractNumber:
+                  description: A Cisco service contract number
+                  type: string
+                  nullable: true
+                  example: '123456789'
+                parentContractInstanceId:
+                  description: Instance ID within a network configuration of the parent item, under which a child item resides
+                  type: string
+                  nullable: true
+                  example: '12345'
+                contractStatus:
+                  description: Status of the service contract
+                  type: string
+                  nullable: true
+                  example: 'ACTIVE'
+                  enum:
+                    - 'ACTIVE'
+                    - 'OVERDUE'
+                    - 'SIGNED'
+                coverageStatus:
+                  description: The contract coverage status for a specific piece of hardware
+                  type: string
+                  example: 'ACTIVE'
+                  enum:
+                    - 'ACTIVE'
+                coverageStartDate:
+                  description: Start date of the coverage. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2021-03-31'
+                coverageEndDate:
+                  description: End date of the coverage. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2021-03-31'
+                contractStartDate:
+                  description: Provides the service contract details from start date to current date. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2021-03-31'
+                contractEndDate:
+                  description: Lists the details of service contract from commencing to end date. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2024-03-30'
+                serviceLevel:
+                  description: Alphanumeric code that denotes the purchased support service
+                  type: string
+                  nullable: true
+                  example: 'L1NBD'
+                serviceProgram:
+                  description: A Cisco Services program
+                  type: string
+                  nullable: true
+                  example: 'CX LEVEL 2'
+                warrantyStartDate:
+                  description: Start date of the device warranty
+                  type: string
+                  nullable: true
+                  example: '2021-03-31'
+                warrantyEndDate:
+                  description: The date warranty expires on a piece of purchased hardware
+                  type: string
+                  nullable: true
+                  example: '2021-03-31'
+                warrantyType:
+                  description: Type of the device warranty
+                  type: string
+                  nullable: true
+                  example: 'Standard Warranty'
+                billtoSiteId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoSiteName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoAddressLine1:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoAddressLine2:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoAddressLine3:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoAddressLine4:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoCity:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoState:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoPostalCode:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoProvince:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoCountry:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                serviceLineStatus:
+                  description: The status of a specific line on a service contract
+                  type: string
+                  nullable: true
+                  example: 'ACTIVE'
+                  enum:
+                    - 'ACTIVE'
+                    - 'OVERDUE'
+                    - 'EXPIRED'
+                    - 'TERMINATED'
+                    - 'SIGNED'
+                installedatSiteName:
+                  description: Name of a site where the product was installed
+                  type: string
+                  nullable: true
+                  example: 'CX CUSTOMER ONE'
+                installedatSiteId:
+                  description: Unique identifier of a site where the product was installed
+                  type: string
+                  nullable: true
+                  example: '123456'
+                installedatAddressLine1:
+                  description: First address line of the installed-at site
+                  type: string
+                  nullable: true
+                  example: '125 Main Street'
+                installedatAddressLine2:
+                  description: Second address line of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'Suite 100'
+                installedatAddressLine3:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                installedatAddressLine4:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                installedatCity:
+                  description: City name of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'SAN JOSE'
+                installedatState:
+                  description: State name of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'CA'
+                installedatProvince:
+                  description: Province name of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'PROVINCE'
+                installedatPostalCode:
+                  description: Postal code of the installed-at site
+                  type: string
+                  nullable: true
+                  example: '95134'
+                installedatCountry:
+                  description: Country name of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'USA'
+                orderShipDate:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                serviceable:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                slaType:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoAddressLine1:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoAddressLine2:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoAddressLine3:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoAddressLine4:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoCity:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoCountry:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoPostalCode:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoProvince:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoSiteId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoSiteName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                shiptoState:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                neInstanceId:
+                  description: Identifier for a network element.  A network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                billtoGuid:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                serviceLineId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                lineCustomerName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                billtoPartyId:
+                  description: Unique identifier of an Entitled Party where the contract was billed to
+                  type: string
+                  nullable: true
+                  example: '123456'
+                installAtGuPartyId:
+                  description: Unique identifier of a company where the product was installed
+                  type: string
+                  nullable: true
+                  example: '123456'
+                contractInstanceId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                businessProcessName:
+                  description: Business Process Names
+                  type: string
+                  nullable: true
+                  example: '{"title": "Coverage Details", "businessProcess": [{"pillarDesc": "HARDWARE REPLACEMENT", "businessProcessName": "Hardware Parts Replacement", "subBusinessProcessName": "8X5X Next Business Day"}, {"pillarDesc": "", "businessProcessName": "Minor Software Updates", "subBusinessProcessName": ""}, {"pillarDesc": "", "businessProcessName": "Major Software Updates", "subBusinessProcessName": ""}, {"pillarDesc": "TAC SUPPORT", "businessProcessName": "Remote Tech Support Access", "subBusinessProcessName": "TAC Access 24X7"}]}'
+                installGUName:
+                  description: Install Global Ultimate (GU) Name
+                  type: string
+                  nullable: true
+                  example: 'CX CUSTOMER ONE'
+                entitledParty:
+                  description: Entitled Party ID
+                  type: string
+                  nullable: true
+                  example: '123456'
+                productFamily:
+                  description: Grouping of similar Cisco products.
+                  type: string
+                  nullable: true
+                  example: 'Cisco Catalyst 9500 Series Switches'
+                contractInstanceNumber:
+                  description: The instance number in Cisco Commerce for an asset
+                  type: string
+                  nullable: true
+                  example: '123456'
+                ISPartner:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                APINAME:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    NotCovered:
+      description: Not covered schema
+      type: object
+      properties:
+        data:
+          description: Contains array of not covered
+          type: array
+          items:
+            properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                serialNumber:
+                  description: A unique identifier for hardware
+                  type: string
+                  nullable: true
+                  example: 'AAA1234ZZZZ'
+                productId:
+                  description: The alphanumeric unique identifier of a Cisco Product. The id is used by customers to order Cisco products
+                  type: string
+                  nullable: true
+                  example: 'ISR4331/K9'
+                orderShipDate:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                hwType:
+                  description: Physical type of the hardware
+                  type: string
+                  nullable: true
+                  example: 'Chassis'
+                  enum:
+                    - 'Chassis'
+                    - 'Module'
+                    - 'Power Supply'
+                    - 'Fan'
+                    - 'Software'
+                contractInstanceNumber:
+                  description: The instance number in Cisco Commerce for an asset
+                  type: string
+                  nullable: true
+                  example: '123456'
+                installedatSiteId:
+                  description: Unique identifier of a site where the product was installed
+                  type: string
+                  nullable: true
+                  example: '123456'
+                installedatSiteName:
+                  description: Name of a site where the product was installed
+                  type: string
+                  nullable: true
+                  example: 'CX CUSTOMER ONE'
+                installedatAddressLine1:
+                  description: First address line of the installed-at site
+                  type: string
+                  nullable: true
+                  example: '125 Main Street'
+                installedatAddressLine2:
+                  description: Second address line of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'Suite 100'
+                installedatAddressLine3:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                installedatAddressLine4:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                installedatCity:
+                  description: City name of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'SAN JOSE'
+                installedatState:
+                  description: State name of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'CA'
+                installedatPostalCode:
+                  description: Postal code of the installed-at site
+                  type: string
+                  nullable: true
+                  example: '95134'
+                installedatProvince:
+                  description: Province name of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'PROVINCE'
+                installedatCountry:
+                  description: Country name of the installed-at site
+                  type: string
+                  nullable: true
+                  example: 'USA'
+                warrantyType:
+                  description: Type of the device warranty
+                  type: string
+                  nullable: true
+                  example: Standard Warranty
+                warrantyStartDate:
+                  description: Start date of the device warranty
+                  type: string
+                  nullable: true
+                  example: '2021-03-31'
+                warrantyEndDate:
+                  description: The date warranty expires on a piece of purchased hardware
+                  type: string
+                  nullable: true
+                  example: '2021-03-31'
+                neInstanceId:
+                  description: Identifier for a network element.  A network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                billtoPartyId:
+                  description: Unique identifier of an Entitled Party where the contract was billed to
+                  type: string
+                  nullable: true
+                  example: '123456'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Hardware:
+      description: Hardware schema
+      type: object
+      properties:
+        data:
+          description: Contains array of hardware
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                neInstanceId:
+                  description: Unique ID used to identify an instance of a network element. Network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                managedNeInstanceId:
+                  description: Identifier for the managed network element. For single chassis devices, the managedNeInstanceId and neInstanceId are same.  For multi-chassis devices, the managedNeInstanceId is the neInstanceId of the primary chassis and all the neInstanceIds will be share the same managedNeInstanceId.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                inventoryName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                hwInstanceId:
+                  description: Unique identifier of the physical hardware
+                  type: string
+                  example: 'SERIAL1,PID1,NA,NA,SERIAL2,PID2,NA'
+                hwName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                hwType:
+                  description: Physical type of the hardware
+                  type: string
+                  nullable: true
+                  example: 'Chassis'
+                  enum:
+                    - 'Chassis'
+                    - 'Module'
+                    - 'Power Supply'
+                    - 'Fan'
+                    - 'Software'
+                productSubtype:
+                  description: Further classification for hardware within a Product Type.
+                  type: string
+                  nullable: true
+                  example: 'Blade Server'
+                slot:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                productFamily:
+                  description: Grouping of similar Cisco products.
+                  type: string
+                  nullable: true
+                  example: 'Cisco Catalyst 9500 Series Switches'
+                productId:
+                  description: The alphanumeric unique identifier of a Cisco Product. The id is used by customers to order Cisco products
+                  type: string
+                  nullable: true
+                  example: 'ISR4331/K9'
+                productType:
+                  description: Broad classification of Cisco product that categorizes its function.
+                  type: string
+                  nullable: true
+                  example: 'Switches'
+                swVersion:
+                  description: A version of operating system installed on the Network Element
+                  type: string
+                  nullable: true
+                  example: '17.9.1'
+                serialNumber:
+                  description: A unique identifier for hardware
+                  type: string
+                  nullable: true
+                  example: 'AAA1234ZZZZ'
+                serialNumberStatus:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                hwRevision:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                tan:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                tanRevision:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                pcbNumber:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                installedMemory:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                installedFlash:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                collectedSerialNumber:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                collectedProductId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                productName:
+                  description: The name of a Cisco product.
+                  type: string
+                  nullable: true
+                  example: 'Cisco Catalyst 9300-24UX Switch'
+                dimensionsFormat:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                dimensions:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                weight:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                formFactor:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                supportPage:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                visioStencilUrl:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                smallImageUrl:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                largeImageUrl:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                baseProductId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                productReleaseDate:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                productDescription:
+                  description: The description of a product.
+                  type: string
+                  example: 'Catalyst 9300 24-port mGig and UPOE, base switch'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    NetworkElements:
+      description: Network Elements schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Network Elements
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                collectorId:
+                  description: ManagedBy data source of the asset.
+                  type: string
+                  nullable: true
+                  example: '172.16.10.10 (Catalyst Center)'
+                neInstanceId:
+                  description: Identifier for a network element.  A network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                managedNeInstanceId:
+                  description: Identifier for the managed network element. For single chassis devices, the managedNeInstanceId and neInstanceId are the same.  For multi-chassis devices, the managedNeInstanceId is the neInstanceId of the primary chassis and all the neInstanceIds will be share the same managedNeInstanceId.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                inventoryName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                managementAddress:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                neSubtype:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                inventoryAvailability:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                lastConfigRegister:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                ipAddress:
+                  description: A numerical label assigned to each device (for example, computer, printer) participating in a computer network that uses the Internet Protocol for communication.
+                  type: string
+                  nullable: true
+                  example: '192.168.1.1'
+                hostname:
+                  description: Human-readable name that corresponds to the address of a device connected to a network
+                  type: string
+                  nullable: true
+                  example: 'switch5'
+                sysName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                featureSet:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                inventoryCollectionDate:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                productFamily:
+                  description: Grouping of similar Cisco products.
+                  type: string
+                  nullable: true
+                  example: 'Cisco Catalyst 9500 Series Switches'
+                productId:
+                  description: The alphanumeric unique identifier of a Cisco Product. The id is used by customers to order Cisco products
+                  type: string
+                  nullable: true
+                  example: 'ISR4331/K9'
+                productType:
+                  description: Broad classification of Cisco product that categorizes its function.
+                  type: string
+                  nullable: true
+                  example: 'Switches'
+                createDate:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                swType:
+                  description: Type of software that is installed on this host/system.
+                  type: string
+                  nullable: true
+                  example: 'IOS-XE'
+                swVersion:
+                  description: A version of operating system installed on the Network Element
+                  type: string
+                  nullable: true
+                  example: '17.9.1'
+                reachabilityStatus:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                neType:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                lastReset:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                resetReason:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                sysContact:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                sysDescr:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                sysLocation:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                sysObjectId:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                configRegister:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                configAvailability:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                configCollectionDate:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                imageName:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                bootstrapVersion:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                isManagedNe:
+                  description: Indicates whether the device is directly managed by the collector (data source).
+                  type: integer
+                  example: 1
+                userField1:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                userField2:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                userField3:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                userField4:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                macAddress:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    CustomerDetails:
+      description: Customer Details schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Customer Details
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                city:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                country:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                customerName:
+                  description: A CX Cloud customer account name  
+                  type: string
+                  nullable: false
+                  example: 'CISCO SYSTEMS'                  
+                postalcode:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                state:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                streetAddress1:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                streetAddress2:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                streetAddress3:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                streetAddress4:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                theatreCode:
+                  description: CX Cloud account region
+                  type: string
+                  example: 'US'
+                  enum:
+                    - 'US'
+                    - 'EMEA'
+                    - 'APJC'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    FieldNotices:
+      description: Field notices schema
+      type: object
+      properties:
+        data:
+          description: Contains array of field notices
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                hwInstanceId:
+                  description: Unique identifier of the physical hardware
+                  type: string
+                  example: 'SERIAL1,PID1,NA,NA,SERIAL2,PID2,NA'
+                bulletinNumber:
+                  description: Unique identifier for a bulletin on Cisco.com
+                  type: string
+                  nullable: true
+                  example: '74135'
+                neInstanceId:
+                  description: Identifier for a network element.  A network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                managedNeInstanceId:
+                  description: Identifier for the managed network element. For single chassis devices, the managedNeInstanceId and neInstanceId are the same.  For multi-chassis devices, the managedNeInstanceId is the neInstanceId of the primary chassis and all the neInstanceIds share the same managedNeInstanceId.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                vulnerabilityStatus:
+                  description: The vulnerability status of a Network Element
+                  type: string
+                  nullable: true
+                  example: 'VUL'
+                  enum:
+                    - 'VUL'
+                    - 'POTVUL'
+                vulnerabilityReason:
+                  description: The reason why the asset is Vulnerable or Potentially Vulnerable to an alert
+                  type: string
+                  nullable: true
+                  example: 'Match on PID, Serial Number'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    FieldNoticeBulletins:
+      description: Field Notice Bulletins schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Field Notice Bulletins
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                bulletinFirstPublished:
+                  description: Date when the bulletin was first published to Cisco.com
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                bulletinNumber:
+                  description: Unique identifier for a bulletin on Cisco.com
+                  type: string
+                  nullable: true
+                  example: '74135'
+                bulletinTitle:
+                  description: Cisco.com Title/Headline for the bulletin
+                  type: string
+                  nullable: true
+                  example: 'FN74261 - Some Cisco NCS560 Systems May Fail When Assembly and Installation Procedures are not Followed Properly During Deployment - Replace on Failure'
+                fieldNoticeType:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                bulletinLastUpdated:
+                  description: Date when the bulletin was last revised and published to Cisco.com. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2024-10-03'
+                url:
+                  description: Cisco.com URL for the bulletin
+                  type: string
+                  nullable: true
+                  example: 'http://www.cisco.com'
+                alertAutomationCaveat:
+                  description: Explanation for additional review by the customer for automation
+                  type: string
+                  nullable: true
+                  example: 'Manually verify based on the bulletin.'
+                bulletinSummary:
+                  description: Summary of a Cisco.com bulletin
+                  type: string
+                  nullable: true
+                  example: 'Summary of the alert.'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    HardwareEol:
+      description: Hardware EOL schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Hardware EOL
+          type: array
+          items:
+              properties:
+                hwInstanceId:
+                  description: Unique identifier of the physical hardware
+                  type: string
+                  example: 'SERIAL1,PID1,NA,NA,SERIAL2,PID2,NA'
+                neInstanceId:
+                  description: Identifier for a network element.  A network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                managedNeInstanceId:
+                  description: Identifier for the managed network element. For single chassis devices, the managedNeInstanceId and neInstanceId are the same.  For multi-chassis devices, the managedNeInstanceId is the neInstanceId of the primary chassis and all the neInstanceIds share the same managedNeInstanceId.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                hwType:
+                  description: Physical type of the hardware
+                  type: string
+                  nullable: true
+                  example: 'Chassis'
+                  enum:
+                    - 'Chassis'
+                    - 'Module'
+                    - 'Power Supply'
+                    - 'Fan'
+                    - 'Software'
+                currentHwEolMilestone:
+                  description: Latest hardware end-of-life milestone that has passed for the product
+                  type: string
+                  nullable: true
+                  example: 'LAST_SUPPORT_DATE'
+                nextHwEolMilestone:
+                  description: Next hardware end-of-life milestone that is coming up. If the device is already LDoS, it will not have a next milestone
+                  type: string
+                  nullable: true
+                  example: 'END_OF_SALE'
+                productId:
+                  description: The alphanumeric unique identifier of a Cisco Product. The id is used by customers to order Cisco products
+                  type: string
+                  nullable: true
+                  example: 'ISR4331/K9'
+                currentHwEolMilestoneDate:
+                  description: Date of the current hardware end-of-life milestone.
+                  type: string
+                  nullable: true
+                  example: '2025-01-31'
+                nextHwEolMilestoneDate:
+                  description: Date of the next hardware end-of-life milestone.
+                  type: string
+                  nullable: true
+                  example: '2025-12-31'
+                hwEolInstanceId:
+                  description: The unique identifier for hardware bulletin
+                  type: string
+                  example: '12345'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    HardwareEolBulletins:
+      description: Hardware EOL Bulletins schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Hardware EOL Bulletins
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                hwEolInstanceId:
+                  description: The unique identifier for hardware bulletin
+                  type: string
+                  example: '12345'
+                bulletinProductId:
+                  description: Cisco Product ID on a published EOL bulletin
+                  type: string
+                  nullable: true
+                  example: 'WS-C6509-E'
+                bulletinNumber:
+                  description: Unique identifier for a bulletin on Cisco.com
+                  type: string
+                  nullable: true
+                  example: 'EOL15177'
+                bulletinTitle:
+                  description: Cisco.com Title/Headline for the bulletin
+                  type: string
+                  nullable: true
+                  example: 'DNA Center Second Generation Appliance'
+                eoLifeAnnouncementDate:
+                  description: Date when the bulletin was first published to Cisco.com
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoNewServiceAttachmentDate:
+                  description: Last date to order a new service and support contract or add the equipment and software to an existing service-and-support contract
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoRoutineFailureAnalysisDate:
+                  description: Last possible date a routine failure analysis may be performed to determine the cause of hardware product failure or defect
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoSaleDate:
+                  description: Last date to order the product through Cisco point-of-sale mechanisms. The product is no longer for sale after this date.
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoServiceContractRenewalDate:
+                  description: Last date to extend or renew a service contract for the product
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoSwMaintenanceReleasesDate:
+                  description: Last date that Cisco engineering may release any final software maintenance releases or bug fixes. After this date, Cisco engineering will no longer develop, repair, maintain, or test the product software.
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoVulnerabilitySecuritySupport:
+                  description: Last date that Cisco engineering may release a planned maintenance release or scheduled software remedy for a security vulnerability issue.
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                lastDateOfSupport:
+                  description: Last date to receive applicable service and support for the product as entitled by active service contracts or by warranty terms and conditions. After this date, all support services for the product will be unavailable and the product becomes obsolete. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                lastShipDate:
+                  description: Last possible ship date that can be requested of Cisco and its contract manufacturers. Actual ship date depends on lead time.
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                url:
+                  description: Uniform resource locator. The Cisco.com URL for the bulletin
+                  type: string
+                  nullable: true
+                  example: 'http://www.cisco.com'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    SecurityAdvisories:
+      description: Security Advisories schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Security Advisories
+          type: array
+          items:
+              properties:
+                neInstanceId:
+                  description: Identifier for a network element.  A network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                managedNeInstanceId:
+                  description: Identifier for the managed network element. For single chassis devices, the managedNeInstanceId and neInstanceId are the same.  For multi-chassis devices, the managedNeInstanceId is the neInstanceId of the primary chassis and all the neInstanceIds will be share the same managedNeInstanceId.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                hwInstanceId:
+                  description: Unique identifier of the physical hardware
+                  type: string
+                  example: 'SERIAL1,PID1,NA,NA,SERIAL2,PID2,NA'
+                securityAdvisoryInstanceId:
+                  description: Internally generated ID for a security advisory
+                  type: string
+                  example: '1234'
+                vulnerabilityStatus:
+                  description: The vulnerability status of a Network Element
+                  type: string
+                  nullable: true
+                  example: 'VUL'
+                  enum:
+                    - 'VUL'
+                    - 'POTVUL'
+                vulnerabilityReason:
+                  description: The reason why the asset is Vulnerable or Potentially Vulnerable to an alert
+                  type: string
+                  nullable: true
+                  example: 'Match on SW Type, SW Version, Chassis PID'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    SecurityAdvisoryBulletins:
+      description: Security Advisory Bulletins schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Security Advisory Bulletins
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                securityAdvisoryInstanceId:
+                  description: Internally generated ID for a security advisory
+                  type: string
+                  example: '1234'
+                url:
+                  description: Uniform resource locator. The Cisco.com URL for the bulletin
+                  type: string
+                  nullable: true
+                  example: 'http://www.cisco.com'
+                bulletinTitle:
+                  description: Cisco.com Title/Headline for the bulletin
+                  type: string
+                  nullable: true
+                  example: 'Cisco IOS Software H.323 Denial of Service Vulnerabilities'
+                bulletinVersion:
+                  description: Version number of the Cisco.com bulletin
+                  type: string
+                  nullable: true
+                  example: '1.1'
+                securityImpactRating:
+                  description: Security Impact Rating (SIR) for Cisco Security Advisories
+                  type: string
+                  nullable: true
+                  example: 'Critical'
+                bulletinFirstPublished:
+                  description: Date when the bulletin was first published to Cisco.com
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                bulletinLastUpdated:
+                  description: Date when the bulletin was last revised and published to Cisco.com
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                bulletinSummary:
+                  description: Summary of a Cisco.com bulletin
+                  type: string
+                  nullable: true
+                  example: 'Summary of the alert.'
+                alertAutomationCaveat:
+                  description: Explanation for additional review by the customer for automation
+                  type: string
+                  nullable: true
+                  example: 'Manually verify based on the bulletin.'
+                advisoryId:
+                  description: Published identifier of a security advisory
+                  type: string
+                  nullable: true
+                  example: 'cisco-sa-ise-unauth-rce-ZAd2GnJ6'
+                ciscoBugIds:
+                  description: Cisco Bug IDs documenting the security issue
+                  type: string
+                  nullable: true
+                  example: 'CSCtc73759,CSCtd33567'
+                cveId:
+                  description: Common Vulnerabilities and Exposures (CVE) Identifier
+                  type: string
+                  nullable: true
+                  example: 'CVE-2025-20202'
+                cvssBaseScore:
+                  description: Common Vulnerability Scoring System (CVSS) Base Score
+                  type: string
+                  nullable: true
+                  example: '7.4'
+                cvssTemporalScore:
+                  description: Common Vulnerability Scoring System (CVSS) Temporal Score
+                  type: string
+                  nullable: true
+                  example: '8.3'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    SoftwareEol:
+      description: SoftwareE OL schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Software EOL
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                neInstanceId:
+                  description: Identifier for a network element.  A network element is a manageable logical entity uniting one or more physical devices and allows distributed devices to be managed in a unified way using one management system.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                managedNeInstanceId:
+                  description: Identifier for the managed network element. For single chassis devices, the managedNeInstanceId and neInstanceId is the same.  For multi-chassis devices, the managedNeInstanceId is the neInstanceId of the primary chassis and all the neInstanceIds will be share the same managedNeInstanceId.
+                  type: string
+                  example: 'NA,SERIAL,PID,NA'
+                swType:
+                  description: Type of software that is installed on this host/system.
+                  type: string
+                  nullable: true
+                  example: 'IOS-XE'
+                currentSwEolMilestone:
+                  description: Latest software end-of-life milestone that has passed for the product
+                  type: string
+                  nullable: true
+                  example: 'END_OF_SALE'
+                nextSwEolMilestone:
+                  description: Next software end-of-life milestone that is coming up. If the device is already LDoS, it will not have a next milestone.
+                  type: string
+                  nullable: true
+                  example: 'END_OF_SECURITY_VUL_SUPPORT_DATE'
+                swVersion:
+                  description: A version of operating system installed on the Network Element
+                  type: string
+                  nullable: true
+                  example: '17.9.1'
+                currentSwEolMilestoneDate:
+                  description: Date of the current software end-of-life milestone. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2024-11-30'
+                nextSwEolMilestoneDate:
+                  description: Date of the next software end-of-life milestone. GMT date format YYYY-MM-DD
+                  type: string
+                  nullable: true
+                  example: '2025-11-30'
+                swEolInstanceId:
+                  description: Internally generated ID for a software end-of-life entry
+                  type: string
+                  example: '234'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    SoftwareEolBulletins:
+      description: Software EOL Bulletins schema
+      type: object
+      properties:
+        data:
+          description: Contains array of Software EOL Bulletins
+          type: array
+          items:
+              properties:
+                customerId:
+                  description: A CX Cloud customer identifier.
+                  type: string
+                  example: 'abc123def'
+                swEolInstanceId:
+                  description: Internally generated ID for a software end-of-life entry
+                  type: string
+                  example: '234'
+                bulletinNumber:
+                  description: Unique identifier for a bulletin on Cisco.com
+                  type: string
+                  nullable: true
+                  example: 'EOL15177'
+                bulletinTitle:
+                  description: Cisco.com Title/Headline for the bulletin
+                  type: string
+                  nullable: true
+                  example: 'IOS XR Software Release 7.4'
+                eoLifeAnnouncementDate:
+                  description: Date when the bulletin was first published to Cisco.com
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoSaleDate:
+                  description: Last date to order the product through Cisco point-of-sale mechanisms. The product is no longer for sale after this date.
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoSwMaintenanceReleasesDate:
+                  description: Last date that Cisco engineering may release any final software maintenance releases or bug fixes. After this date, Cisco engineering will no longer develop, repair, maintain, or test the product software.
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                lastDateOfSupport:
+                  description: Last date to receive applicable service and support for the product as entitled by active service contracts or by warranty terms and conditions. After this date, all support services for the product will be unavailable and the product
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                eoVulnerabilitySecuritySupport:
+                  description: Last date that Cisco engineering may release a planned maintenance release or scheduled software remedy for a security vulnerability issue.
+                  type: string
+                  nullable: true
+                  example: '2024-11-11'
+                url:
+                  description: Uniform resource locator. The Cisco.com URL for the bulletin
+                  type: string
+                  nullable: true
+                  example: 'http://www.cisco.com'
+                swMajorVersion:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                swMaintenanceVersion:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                swTrain:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+                swType:
+                  description: Field not available in CX Cloud.  
+                  type: string
+                  nullable: true
+                  example: 'null'
+                  deprecated: true
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+  securitySchemes:
+    Oauth2:
+      type: oauth2
+      description: OAuth2 authentication with authorization code flow.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://id.cisco.com/oauth2/default/v1/token
+          tokenUrl: https://id.cisco.com/oauth2/default/v1/token
+          scopes:
+            'apis:read': Grants read access
